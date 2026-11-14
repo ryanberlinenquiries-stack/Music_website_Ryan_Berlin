@@ -145,6 +145,13 @@
   #footer-toggle { bottom: 11.5rem; }
   #chaos-toggle  { bottom: 15rem; }
   #annoy-toggle  { bottom: 18.5rem; }
+  #email-fab { position: fixed; left: 1rem; bottom: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: .4rem;
+    padding: .65rem 1.1rem; border-radius: 999px; border: 0; background: #485fc7; color: #fff; cursor: pointer;
+    font: 600 .95rem system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+  #email-fab:hover { background: #3a51b8; }
+  body.is-editing #email-fab { display: none; }  /* the text-edit bar has its own email button */
+  #email-fab:focus-visible { outline: 3px solid #ffdd57; outline-offset: 2px; }
+  @media (max-width: 600px) { #email-fab { padding: .6rem .9rem; font-size: .85rem; } }
   #annoy-toggle[aria-pressed="true"] { background: #ffdd57; border-color: #e0a800; }
   .tool-panel input[type=range] + output { font: 0.75rem ui-monospace, monospace; color: #666; min-width: 3.2rem; text-align: right; }
   .tool-panel .slider { display: flex; align-items: center; gap: 0.35rem; }
@@ -1572,6 +1579,8 @@
   toggle.addEventListener('click', function () { window.toolPanels.toggle(toggle, panel); });
 })();
 </script>
+
+<button id="email-fab" type="button" class="email-choices" title="Email all your editor choices to Jarrod">📧 Email my choices</button>
 
 <script>
   // 📧 Email my choices: gathers every editor's saved settings into one email to the site builder.
