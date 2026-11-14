@@ -149,7 +149,12 @@
     padding: .65rem 1.1rem; border-radius: 999px; border: 0; background: #485fc7; color: #fff; cursor: pointer;
     font: 600 .95rem system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
   #email-fab:hover { background: #3a51b8; }
-  body.is-editing #email-fab { display: none; }  /* the text-edit bar has its own email button */
+  #reset-fab { position: fixed; left: 1rem; bottom: 4.25rem; z-index: 50; padding: .5rem 1rem; border-radius: 999px;
+    border: 1px solid #ccc; background: #fff; color: #b00020; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    font: 600 .85rem system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #reset-fab:hover { background: #fff0f2; border-color: #b00020; }
+  #reset-fab:focus-visible { outline: 3px solid #ffdd57; outline-offset: 2px; }
+  body.is-editing :is(#email-fab, #reset-fab) { display: none; }  /* the text-edit bar has its own email button */
   #email-fab:focus-visible { outline: 3px solid #ffdd57; outline-offset: 2px; }
   @media (max-width: 600px) { #email-fab { padding: .6rem .9rem; font-size: .85rem; } }
   #annoy-toggle[aria-pressed="true"] { background: #ffdd57; border-color: #e0a800; }
@@ -1581,6 +1586,17 @@
 </script>
 
 <button id="email-fab" type="button" class="email-choices" title="Email all your editor choices to Jarrod">📧 Email my choices</button>
+<button id="reset-fab" type="button" title="Undo every change made with the editor buttons">↺ Reset everything</button>
+<script>
+  // Wipes every editor's saved settings (colours, layout, text, footer, overlay, toys) and reloads the page.
+  document.getElementById('reset-fab').addEventListener('click', function () {
+    if (!window.confirm('Reset everything? This undoes all your colour, layout, text, footer and chaos changes in this browser. Email your choices first if you want to keep them.')) return;
+    try {
+      Object.keys(localStorage).forEach(function (k) { if (/^ryan-/.test(k)) localStorage.removeItem(k); });
+    } catch (e) {}
+    window.location.reload();
+  });
+</script>
 
 <script>
   // 📧 Email my choices: gathers every editor's saved settings into one email to the site builder.
