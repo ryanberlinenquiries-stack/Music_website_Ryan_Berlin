@@ -127,8 +127,8 @@
     background: #fff; font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.15);
   }
   #token-panel {
-    position: fixed; right: 1rem; bottom: 4.5rem; z-index: 50;
-    width: min(320px, calc(100vw - 2rem)); max-height: 70vh; overflow-y: auto;
+    position: fixed; right: 1rem; bottom: 8rem; z-index: 50;
+    width: min(320px, calc(100vw - 2rem)); max-height: calc(100vh - 9rem); overflow-y: auto;
     background: #fff; color: #222; border: 1px solid #ddd; border-radius: 10px;
     padding: 1rem; box-shadow: 0 6px 24px rgba(0,0,0,.2); font-size: 0.85rem;
   }
@@ -154,6 +154,28 @@
   #token-panel input[type=color] { width: 2.5rem; height: 1.8rem; border: 1px solid #ccc; padding: 0; background: none; cursor: pointer; }
   #token-panel input[type=range] { width: 6rem; }
   #token-panel .actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+
+  /* ===== Copy editor (prototype tool, delete this block + its script to remove) ===== */
+  #copy-toggle {
+    position: fixed; right: 1rem; bottom: 4.5rem; z-index: 50;
+    width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid #ccc;
+    background: #fff; font-size: 1.3rem; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  }
+  #copy-toggle[aria-pressed="true"] { background: #485fc7; border-color: #485fc7; }
+  #copy-bar {
+    position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 50;
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+    max-width: calc(100vw - 9rem); padding: 0.5rem 0.75rem; border-radius: 10px;
+    background: #fff; color: #222; border: 1px solid #ddd; box-shadow: 0 6px 24px rgba(0,0,0,.2);
+    font: 0.85rem system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  #copy-bar[hidden] { display: none; }
+  #copy-bar .button { font-family: inherit; }
+  body.is-editing [data-copy] { outline: 1px dashed rgba(72, 95, 199, .6); outline-offset: 3px; border-radius: 2px; cursor: text; }
+  body.is-editing [data-copy]:hover { outline-style: solid; }
+  body.is-editing [data-copy]:focus { outline: 2px solid #485fc7; }
+  body.is-editing [data-copy].is-changed { background: rgba(255, 221, 87, .25); }
+  [data-copy="bio"] { white-space: pre-line; }
 </style>
 </head>
 <body>
@@ -434,6 +456,96 @@
     (navigator.clipboard ? navigator.clipboard.writeText(out) : Promise.reject())
       .then(function () { btn.textContent = 'Copied!'; }, function () { console.log(out); btn.textContent = 'See console'; })
       .finally(function () { setTimeout(function () { btn.textContent = 'Copy CSS'; }, 1500); });
+  });
+})();
+</script>
+
+<!-- ===== Copy editor (prototype tool) ===== -->
+<button id="copy-toggle" type="button" aria-label="Edit text" aria-pressed="false" title="Edit text">✏️</button>
+<div id="copy-bar" hidden>
+  <span>Click any outlined text to edit. Saved in this browser.</span>
+  <button type="button" class="button is-small" id="copy-export">Copy all text</button>
+  <button type="button" class="button is-small" id="copy-reset">Reset text</button>
+  <button type="button" class="button is-small is-link" id="copy-done">Done</button>
+</div>
+
+<script>
+(function () {
+  var KEY = 'ryan-bulma-copy-v1';
+  // [selector, key prefix]. Keys are prefix + position, so keep the page order stable or bump KEY.
+  var FIELDS = [
+    ['.topbar-brand', 'brand'],
+    ['.artist-links a span', 'nav-link-'],
+    ['.section .title.is-1', 'hero-title'],
+    ['.section .content p', 'bio'],
+    ['.section h2.title', 'albums-heading'],
+    ['.card-content .title', 'album-title-'],
+    ['.card-content .subtitle', 'album-year-'],
+    ['.card-footer-item span', 'album-link-']
+  ];
+  var els = [];
+  FIELDS.forEach(function (f) {
+    var found = document.querySelectorAll(f[0]);
+    found.forEach(function (el, i) {
+      el.dataset.copy = found.length > 1 || /-$/.test(f[1]) ? f[1] + (i + 1) : f[1];
+      el.dataset.copyDefault = el.textContent;
+      els.push(el);
+    });
+  });
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} }
+  function mark(el) { el.classList.toggle('is-changed', el.textContent !== el.dataset.copyDefault); }
+  els.forEach(function (el) { if (el.dataset.copy in saved) el.textContent = saved[el.dataset.copy]; mark(el); });
+
+  var supportsPlain = (function () { var d = document.createElement('div'); d.contentEditable = 'plaintext-only'; return d.contentEditable === 'plaintext-only'; })();
+  var editing = false, toggle = document.getElementById('copy-toggle'), bar = document.getElementById('copy-bar');
+
+  function setEditing(on) {
+    editing = on;
+    document.body.classList.toggle('is-editing', on);
+    toggle.setAttribute('aria-pressed', String(on));
+    bar.hidden = !on;
+    els.forEach(function (el) {
+      if (on) { el.contentEditable = supportsPlain ? 'plaintext-only' : 'true'; el.spellcheck = true; }
+      else { el.removeAttribute('contenteditable'); }
+    });
+    if (!on && document.activeElement && document.activeElement.dataset && document.activeElement.dataset.copy) document.activeElement.blur();
+  }
+
+  els.forEach(function (el) {
+    el.addEventListener('input', function () {
+      var key = el.dataset.copy;
+      if (el.textContent === el.dataset.copyDefault) delete saved[key]; else saved[key] = el.textContent;
+      save(); mark(el);
+    });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || (e.key === 'Enter' && el.dataset.copy !== 'bio')) { e.preventDefault(); el.blur(); }
+    });
+    el.addEventListener('paste', function (e) {   // keep pasted text plain (Word/Docs formatting stripped)
+      if (supportsPlain) return;
+      e.preventDefault();
+      document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text/plain'));
+    });
+  });
+  // Don't follow links (or let the card/nav steal the click) while editing their labels
+  document.addEventListener('click', function (e) {
+    if (editing && e.target.closest('a')) e.preventDefault();
+  }, true);
+
+  toggle.addEventListener('click', function () { setEditing(!editing); });
+  document.getElementById('copy-done').addEventListener('click', function () { setEditing(false); });
+  document.getElementById('copy-reset').addEventListener('click', function () {
+    els.forEach(function (el) { el.textContent = el.dataset.copyDefault; mark(el); });
+    saved = {}; save();
+  });
+  document.getElementById('copy-export').addEventListener('click', function (e) {
+    var out = els.map(function (el) { return el.dataset.copy + ':\n' + el.textContent.trim(); }).join('\n\n');
+    var btn = e.currentTarget;
+    (navigator.clipboard ? navigator.clipboard.writeText(out) : Promise.reject())
+      .then(function () { btn.textContent = 'Copied!'; }, function () { console.log(out); btn.textContent = 'See console'; })
+      .finally(function () { setTimeout(function () { btn.textContent = 'Copy all text'; }, 1500); });
   });
 })();
 </script>
