@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ryan Berlin — Bulma</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Bebas+Neue&display=swap">
+<style>
+  /* ===== Design tokens: edit here, or use the 🎨 picker on the page ===== */
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #4a4a4a;
+    --color-heading: #1a1a1a;
+    --color-nav-bg: #ffffff;
+    --color-nav-text: #1a1a1a;
+    --color-nav-border: #e5e5e5;
+    /* Main artist links: official brand colours */
+    --color-spotify: #1db954;
+    --color-spotify-text: #000000;
+    --color-applemusic: #fa243c;
+    --color-applemusic-text: #ffffff;
+    --color-youtube: #ff0000;
+    --color-youtube-text: #ffffff;
+    --color-bandcamp: #408294;
+    --color-bandcamp-text: #ffffff;
+    --color-card-bg: #ffffff;
+    --color-card-border: #ededed;
+    --color-card-link: #1f3fbf;
+    --color-card-link-hover: #142a80;
+
+    /* Fonts (Google Fonts load automatically when chosen in the picker) */
+    --font-body: "Lora", Georgia, serif;
+    --font-heading: "Bebas Neue", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-nav: "Lora", Georgia, serif;
+
+    --nav-opacity-desktop: 0.9;  /* nav background, desktop */
+    --nav-opacity-mobile: 1;     /* nav background, mobile (solid) */
+    --link-opacity: 1;           /* artist + album links */
+  }
+
+  /* ===== Base ===== */
+  html, body { background: var(--color-bg); color: var(--color-text); }
+  html, body, .button, .card-footer-item { font-family: var(--font-body); }
+  .title, .subtitle { font-family: var(--font-heading); }
+  .topbar, .topbar-brand, .artist-links a { font-family: var(--font-nav); }
+  .title { color: var(--color-heading); }
+  .content { color: var(--color-text); }
+
+  /* ===== Sticky top bar with the four artist links ===== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--color-nav-border);
+    isolation: isolate;
+  }
+  .topbar::before {           /* background layer so opacity doesn't fade the text */
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-nav-bg);
+    opacity: var(--nav-opacity-desktop);
+    backdrop-filter: blur(8px);
+  }
+  .topbar-brand { color: var(--color-nav-text); font-weight: 700; font-size: 1.125rem; white-space: nowrap; }
+  .artist-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .artist-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    background: var(--link-bg);
+    color: var(--link-text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: var(--link-opacity);
+    transition: filter 0.15s;
+  }
+  .artist-links a:hover,
+  .artist-links a:focus-visible { color: var(--link-text); filter: brightness(0.88); }
+  .artist-links .link-spotify    { --link-bg: var(--color-spotify);    --link-text: var(--color-spotify-text); }
+  .artist-links .link-applemusic { --link-bg: var(--color-applemusic); --link-text: var(--color-applemusic-text); }
+  .artist-links .link-youtube    { --link-bg: var(--color-youtube);    --link-text: var(--color-youtube-text); }
+  .artist-links .link-bandcamp   { --link-bg: var(--color-bandcamp);   --link-text: var(--color-bandcamp-text); }
+
+  @media (max-width: 768px) {
+    .topbar { flex-direction: column; align-items: stretch; gap: 0.5rem; padding: 0.6rem 1rem; }
+    .topbar::before { opacity: var(--nav-opacity-mobile); backdrop-filter: none; }
+    .topbar-brand { text-align: center; }
+    .artist-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap: 0.4rem; }
+    .artist-links a { padding: 0.5rem 0.25rem; font-size: 0.8rem; }
+  }
+
+  /* ===== Brand logos ===== */
+  .brand-icon { width: 1.15em; height: 1.15em; fill: currentColor; flex-shrink: 0; }
+  .artist-links a, .card-footer-item { gap: 0.4em; }
+  @media (max-width: 768px) {
+    .artist-links a { flex-direction: column; gap: 0.2rem; font-size: 0.75rem; }
+    .artist-links .brand-icon { width: 1.3rem; height: 1.3rem; }
+  }
+
+  /* ===== Album cards ===== */
+  .card { background: var(--color-card-bg); }
+  .card-footer, .card-footer-item:not(:last-child) { border-color: var(--color-card-border); }
+  .card-footer-item { color: var(--color-card-link); font-weight: 600; opacity: var(--link-opacity); }
+  .card-footer-item:hover { color: var(--color-card-link-hover); background: transparent; }
+  @media (max-width: 480px) {
+    .card-footer { flex-wrap: wrap; }
+    .card-footer-item { flex: 1 1 50%; border-bottom: 1px solid var(--color-card-border); font-size: 0.875rem; }
+  }
+
+  /* ===== Token picker (prototype tool, delete this block + the script to remove) ===== */
+  #token-toggle {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 50;
+    width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid #ccc;
+    background: #fff; font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  }
+  #token-panel {
+    position: fixed; right: 1rem; bottom: 4.5rem; z-index: 50;
+    width: min(320px, calc(100vw - 2rem)); max-height: 70vh; overflow-y: auto;
+    background: #fff; color: #222; border: 1px solid #ddd; border-radius: 10px;
+    padding: 1rem; box-shadow: 0 6px 24px rgba(0,0,0,.2); font-size: 0.85rem;
+  }
+  #token-panel[hidden] { display: none; }
+  #token-panel, #token-panel .button { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #token-panel h3 { font-weight: 700; margin-bottom: 0.5rem; }
+  #token-panel h4 { font-weight: 700; margin: 0.75rem 0 0.25rem; font-size: 0.8rem; color: #666; }
+  #token-panel .font-row { padding: 0.25rem 0; }
+  #token-panel .font-row .row { padding: 0; }
+  #token-panel .fp-btn { min-width: 9.5rem; max-width: 9.5rem; display: flex; justify-content: space-between; align-items: center; gap: 0.25rem;
+    font-size: 0.95rem; padding: 0.2rem 0.5rem; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #222; cursor: pointer; text-align: left; }
+  #token-panel .fp-btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #token-panel .fp-btn::after { content: "▾"; font-family: system-ui, sans-serif; font-size: 0.75rem; color: #777; }
+  #token-panel .fp-list { list-style: none; margin: 0.35rem 0 0; padding: 0.25rem; max-height: 15rem; overflow-y: auto;
+    border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+  #token-panel .fp-list:focus { outline: 2px solid #485fc7; outline-offset: 1px; }
+  #token-panel .fp-list li { padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 1.05rem; color: #222; cursor: pointer; line-height: 1.3; }
+  #token-panel .fp-list li.is-active { background: #eef1fb; }
+  #token-panel .fp-list li[aria-selected="true"] { font-weight: 700; }
+  #token-panel .fp-list li[aria-selected="true"]::before { content: "✓ "; font-family: system-ui, sans-serif; }
+  #token-panel .row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.25rem 0; }
+  #token-panel code { font-size: 0.75rem; background: none; color: #444; padding: 0; }
+  #token-panel input[type=color] { width: 2.5rem; height: 1.8rem; border: 1px solid #ccc; padding: 0; background: none; cursor: pointer; }
+  #token-panel input[type=range] { width: 6rem; }
+  #token-panel .actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+</style>
+</head>
+<body>
+
+<!-- Brand logos: Simple Icons (CC0), simple-icons@13.0.0 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-spotify" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></symbol>
+  <symbol id="i-applemusic" viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.4-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.295-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.045-1.773-.6-1.943-1.536a1.88 1.88 0 011.038-2.022c.323-.16.67-.25 1.018-.324.378-.082.758-.153 1.134-.24.274-.063.457-.23.51-.516a.904.904 0 00.02-.193c0-1.815 0-3.63-.002-5.443a.725.725 0 00-.026-.185c-.04-.15-.15-.243-.304-.234-.16.01-.318.035-.475.066-.76.15-1.52.303-2.28.456l-2.325.47-1.374.278c-.016.003-.032.01-.048.013-.277.077-.377.203-.39.49-.002.042 0 .086 0 .13-.002 2.602 0 5.204-.003 7.805 0 .42-.047.836-.215 1.227-.278.64-.77 1.04-1.434 1.233-.35.1-.71.16-1.075.172-.96.036-1.755-.6-1.92-1.544-.14-.812.23-1.685 1.154-2.075.357-.15.73-.232 1.108-.31.287-.06.575-.116.86-.177.383-.083.583-.323.6-.714v-.15c0-2.96 0-5.922.002-8.882 0-.123.013-.25.042-.37.07-.285.273-.448.546-.518.255-.066.515-.112.774-.165.733-.15 1.466-.296 2.2-.444l2.27-.46c.67-.134 1.34-.27 2.01-.403.22-.043.442-.088.663-.106.31-.025.523.17.554.482.008.073.012.148.012.223.002 1.91.002 3.822 0 5.732z"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
+  <symbol id="i-bandcamp" viewBox="0 0 24 24"><path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/></symbol>
+</svg>
+
+<header class="topbar">
+  <span class="topbar-brand">Ryan Berlin</span>
+  <nav class="artist-links" aria-label="Listen to Ryan Berlin">
+    <a href="#" class="link-spotify"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+    <a href="#" class="link-applemusic"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
+    <a href="#" class="link-youtube"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
+    <a href="#" class="link-bandcamp"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+  </nav>
+</header>
+
+<figure class="image is-16by9">
+  <video class="has-ratio" src="hero.mp4" poster="hero.jpg" autoplay loop muted playsinline></video>
+</figure>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-vcentered">
+      <div class="column is-one-third">
+        <figure class="image is-square"><img src="ryan.jpg" alt="Ryan Berlin" class="is-rounded"></figure>
+      </div>
+      <div class="column">
+        <h1 class="title is-1">Ryan Berlin</h1>
+        <div class="content is-medium">
+          <p>Ryan Berlin writes songs about late trains, borrowed rooms, and the cities that hold on to you after you leave. Recorded mostly at night, mostly alone, and always a little louder than planned.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="title is-2">Albums</h2>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="card">
+          <div class="card-image"><figure class="image is-square"><img src="album-2.jpg" alt="Northbound Static cover"></figure></div>
+          <div class="card-content">
+            <p class="title is-4">Northbound Static</p>
+            <p class="subtitle is-6">2022</p>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+          </footer>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="card">
+          <div class="card-image"><figure class="image is-square"><img src="album-3.jpg" alt="Paradox of Choice cover"></figure></div>
+          <div class="card-content">
+            <p class="title is-4">Paradox of Choice</p>
+            <p class="subtitle is-6">TBA</p>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+          </footer>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="card">
+          <div class="card-image"><figure class="image is-square"><img src="refurbished.jpg" alt="Refurbished cover"></figure></div>
+          <div class="card-content">
+            <p class="title is-4">Refurbished</p>
+            <p class="subtitle is-6">2024</p>
+          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
+            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Token picker (prototype tool) ===== -->
+<button id="token-toggle" type="button" aria-label="Edit colour tokens" aria-expanded="false" aria-controls="token-panel">🎨</button>
+<div id="token-panel" hidden>
+  <h3>Design tokens</h3>
+  <div id="token-rows"></div>
+  <div class="actions">
+    <button type="button" class="button is-small" id="token-copy">Copy CSS</button>
+    <button type="button" class="button is-small" id="token-reset">Reset</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var COLORS = ['--color-bg','--color-text','--color-heading','--color-nav-bg','--color-nav-text','--color-nav-border',
+                '--color-spotify','--color-spotify-text','--color-applemusic','--color-applemusic-text',
+                '--color-youtube','--color-youtube-text','--color-bandcamp','--color-bandcamp-text','--color-card-bg','--color-card-border',
+                '--color-card-link','--color-card-link-hover'];
+  var RANGES = ['--nav-opacity-desktop','--nav-opacity-mobile','--link-opacity'];
+  var FONT_TOKENS = ['--font-body','--font-heading','--font-nav'];
+  var SANS = ', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+  // [label, font-family value, Google Fonts spec or null]
+  var FONTS = [
+    ['System sans',      'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', null],
+    ['System serif',     'Georgia, "Times New Roman", serif', null],
+    ['System mono',      'ui-monospace, Menlo, Consolas, monospace', null],
+    ['Inter',            '"Inter"' + SANS, 'Inter:wght@400;600;700'],
+    ['DM Sans',          '"DM Sans"' + SANS, 'DM+Sans:wght@400;600;700'],
+    ['Work Sans',        '"Work Sans"' + SANS, 'Work+Sans:wght@400;600;700'],
+    ['Montserrat',       '"Montserrat"' + SANS, 'Montserrat:wght@400;600;700'],
+    ['Poppins',          '"Poppins"' + SANS, 'Poppins:wght@400;600;700'],
+    ['Space Grotesk',    '"Space Grotesk"' + SANS, 'Space+Grotesk:wght@400;600;700'],
+    ['Oswald',           '"Oswald"' + SANS, 'Oswald:wght@400;600;700'],
+    ['Bebas Neue',       '"Bebas Neue"' + SANS, 'Bebas+Neue'],
+    ['Archivo Black',    '"Archivo Black"' + SANS, 'Archivo+Black'],
+    ['Playfair Display', '"Playfair Display", Georgia, serif', 'Playfair+Display:wght@400;700'],
+    ['Lora',             '"Lora", Georgia, serif', 'Lora:wght@400;600;700'],
+    ['Merriweather',     '"Merriweather", Georgia, serif', 'Merriweather:wght@400;700'],
+    ['Libre Baskerville','"Libre Baskerville", Georgia, serif', 'Libre+Baskerville:wght@400;700'],
+    ['Space Mono',       '"Space Mono", ui-monospace, monospace', 'Space+Mono:wght@400;700'],
+    ['Courier Prime',    '"Courier Prime", ui-monospace, monospace', 'Courier+Prime:wght@400;700'],
+    ['Caveat',           '"Caveat", cursive', 'Caveat:wght@400;700']
+  ];
+  function fontByValue(v) { for (var i = 0; i < FONTS.length; i++) if (FONTS[i][1] === v) return FONTS[i]; return null; }
+  function gfUrl(spec) { return 'https://fonts.googleapis.com/css2?family=' + spec + '&display=swap'; }
+  var loadedFonts = { 'Lora:wght@400;600;700': true, 'Bebas+Neue': true };  // already linked in <head>
+  function loadAllPreviews() {   // one request so every option can render in its own font
+    var specs = FONTS.map(function (f) { return f[2]; }).filter(function (sp) { return sp && !loadedFonts[sp]; });
+    if (!specs.length) return;
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = gfUrl(specs.join('&family='));
+    document.head.appendChild(l); specs.forEach(function (sp) { loadedFonts[sp] = true; });
+  }
+  function loadFont(v) {
+    var f = fontByValue(v);
+    if (!f || !f[2] || loadedFonts[f[2]]) return;
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = gfUrl(f[2]);
+    document.head.appendChild(l); loadedFonts[f[2]] = true;
+  }
+  var KEY = 'ryan-bulma-tokens-v3';
+  var root = document.documentElement;
+  var css = getComputedStyle(root);
+  var defaults = {};
+  COLORS.concat(RANGES, FONT_TOKENS).forEach(function (t) { defaults[t] = css.getPropertyValue(t).trim(); });
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  Object.keys(saved).forEach(function (t) {
+    if (!(t in defaults)) return;
+    root.style.setProperty(t, saved[t]);
+    if (FONT_TOKENS.indexOf(t) > -1) loadFont(saved[t]);
+  });
+
+  function current(t) { return root.style.getPropertyValue(t).trim() || defaults[t]; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} }
+  function set(t, v) { root.style.setProperty(t, v); saved[t] = v; save(); }
+  function heading(text) { var h = document.createElement('h4'); h.textContent = text; rows.appendChild(h); }
+
+  var rows = document.getElementById('token-rows');
+  var pickerSeq = 0;
+
+  // Custom dropdown so every option is drawn in its own font (native <select> can't do that reliably)
+  function fontPicker(t) {
+    var id = 'fp' + (pickerSeq++);
+    var wrap = document.createElement('div'); wrap.className = 'font-row';
+    var row = document.createElement('div'); row.className = 'row';
+    var lab = document.createElement('code'); lab.id = id + '-label'; lab.textContent = t;
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'fp-btn';
+    btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-labelledby', id + '-label ' + id + '-btn'); btn.id = id + '-btn';
+    var btnText = document.createElement('span'); btn.appendChild(btnText);
+    row.appendChild(lab); row.appendChild(btn); wrap.appendChild(row);
+
+    var list = document.createElement('ul'); list.className = 'fp-list'; list.hidden = true;
+    list.setAttribute('role', 'listbox'); list.tabIndex = -1; list.setAttribute('aria-labelledby', id + '-label');
+    var options = FONTS.slice();
+    var cur = current(t);
+    if (!fontByValue(cur)) options.unshift(['Custom', cur, null]);
+    var selected = 0, active = 0, items = [];
+    options.forEach(function (f, i) {
+      var li = document.createElement('li'); li.id = id + '-o' + i; li.setAttribute('role', 'option');
+      li.textContent = f[0]; li.style.fontFamily = f[1];
+      if (f[1] === cur) selected = i;
+      li.addEventListener('click', function () { choose(i); });
+      li.addEventListener('mousemove', function () { setActive(i, false); });
+      list.appendChild(li); items.push(li);
+    });
+    wrap.appendChild(list);
+
+    function render() {
+      btnText.textContent = options[selected][0]; btn.style.fontFamily = options[selected][1];
+      items.forEach(function (li, i) { li.setAttribute('aria-selected', String(i === selected)); });
+    }
+    function setActive(i, scroll) {
+      items[active].classList.remove('is-active'); active = i; items[i].classList.add('is-active');
+      list.setAttribute('aria-activedescendant', items[i].id);
+      if (scroll) items[i].scrollIntoView({ block: 'nearest' });
+    }
+    function open() {
+      loadAllPreviews(); list.hidden = false; btn.setAttribute('aria-expanded', 'true');
+      setActive(selected, true); list.focus();
+    }
+    function close(refocus) {
+      list.hidden = true; btn.setAttribute('aria-expanded', 'false'); if (refocus) btn.focus();
+    }
+    function choose(i) {
+      selected = i; loadFont(options[i][1]); set(t, options[i][1]); render(); close(true);
+    }
+    btn.addEventListener('click', function () { list.hidden ? open() : close(false); });
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); }
+    });
+    list.addEventListener('keydown', function (e) {
+      var n = items.length;
+      if (e.key === 'ArrowDown') { e.preventDefault(); setActive((active + 1) % n, true); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((active - 1 + n) % n, true); }
+      else if (e.key === 'Home') { e.preventDefault(); setActive(0, true); }
+      else if (e.key === 'End') { e.preventDefault(); setActive(n - 1, true); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(active); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(true); }
+      else if (e.key === 'Tab') { close(false); }
+    });
+    document.addEventListener('click', function (e) { if (!list.hidden && !wrap.contains(e.target)) close(false); });
+    render();
+    return wrap;
+  }
+  function build() {
+    rows.innerHTML = '';
+    heading('Fonts');
+    FONT_TOKENS.forEach(function (t) { rows.appendChild(fontPicker(t)); });
+    heading('Colours');
+    COLORS.forEach(function (t) {
+      var row = document.createElement('label'); row.className = 'row';
+      row.innerHTML = '<code>' + t + '</code>';
+      var input = document.createElement('input'); input.type = 'color'; input.value = current(t);
+      input.addEventListener('input', function () { set(t, input.value); });
+      row.appendChild(input); rows.appendChild(row);
+    });
+    heading('Opacity');
+    RANGES.forEach(function (t) {
+      var row = document.createElement('label'); row.className = 'row';
+      row.innerHTML = '<code>' + t + '</code>';
+      var input = document.createElement('input'); input.type = 'range'; input.min = 0; input.max = 1; input.step = 0.05; input.value = current(t);
+      input.addEventListener('input', function () { set(t, input.value); });
+      row.appendChild(input); rows.appendChild(row);
+    });
+  }
+  build();
+
+  var panel = document.getElementById('token-panel'), toggle = document.getElementById('token-toggle');
+  toggle.addEventListener('click', function () {
+    panel.hidden = !panel.hidden; toggle.setAttribute('aria-expanded', String(!panel.hidden));
+    if (!panel.hidden) loadAllPreviews();
+  });
+  document.getElementById('token-reset').addEventListener('click', function () {
+    Object.keys(defaults).forEach(function (t) { root.style.removeProperty(t); });
+    saved = {}; save(); build();
+  });
+  document.getElementById('token-copy').addEventListener('click', function (e) {
+    var specs = [];
+    FONT_TOKENS.forEach(function (t) { var f = fontByValue(current(t)); if (f && f[2] && specs.indexOf(f[2]) < 0) specs.push(f[2]); });
+    var imports = specs.length ? '/* Add to <head>: <link rel="stylesheet" href="' + gfUrl(specs.join('&family=')) + '"> */\n' : '';
+    var out = imports + ':root {\n' + Object.keys(defaults).map(function (t) { return '  ' + t + ': ' + current(t) + ';'; }).join('\n') + '\n}';
+    var btn = e.currentTarget;
+    (navigator.clipboard ? navigator.clipboard.writeText(out) : Promise.reject())
+      .then(function () { btn.textContent = 'Copied!'; }, function () { console.log(out); btn.textContent = 'See console'; })
+      .finally(function () { setTimeout(function () { btn.textContent = 'Copy CSS'; }, 1500); });
+  });
+})();
+</script>
+
+</body>
+</html>
