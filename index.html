@@ -111,7 +111,12 @@
   }
 
   /* ===== Hero video link ===== */
-  .hero-video-link { display: block; cursor: pointer; }
+  .hero-video-link { display: block; cursor: pointer; position: relative; }
+  .hero-video-link .play-badge { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .hero-video-link .play-badge span { width: 84px; height: 84px; border-radius: 50%; background: rgba(0,0,0,.55); display: flex; align-items: center; justify-content: center; }
+  .hero-video-link .play-badge span::after { content: ""; margin-left: 8px; border-style: solid; border-width: 18px 0 18px 30px; border-color: transparent transparent transparent #fff; }
+  .hero-video-link:hover .play-badge span { background: rgba(0,0,0,.75); }
+  .hero-player iframe { border: 0; }
   .hero-video-link:focus-visible { outline: 3px solid var(--color-card-link); outline-offset: -3px; }
 
   /* ===== Album cards ===== */
@@ -206,7 +211,19 @@
   <figure class="image is-16by9">
     <video class="has-ratio" src="hero.mp4" poster="hero.jpg" autoplay loop muted playsinline></video>
   </figure>
+  <div class="play-badge" aria-hidden="true"><span></span></div>
 </a>
+<script>
+  // Swap the looping preview for the full video, played inline via Google Drive's embed player.
+  document.querySelector('.hero-video-link').addEventListener('click', function (e) {
+    e.preventDefault();
+    var id = '1Omf1SuoOilmICBwrJfnDY7DKdrJNlCqf';
+    var fig = document.createElement('figure');
+    fig.className = 'image is-16by9 hero-player';
+    fig.innerHTML = '<iframe class="has-ratio" src="https://drive.google.com/file/d/' + id + '/preview" allow="autoplay; fullscreen" allowfullscreen title="Ryan Berlin video"></iframe>';
+    this.replaceWith(fig);
+  });
+</script>
 
 <section class="section">
   <div class="container">
