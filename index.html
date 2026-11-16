@@ -103,7 +103,13 @@
   .sky-clouds .sky-sparkles circle:nth-child(3n)   { animation-duration: 5.5s; animation-delay: -2s; }
   .sky-clouds .sky-sparkles circle:nth-child(3n+1) { animation-duration: 3.2s; animation-delay: -1s; }
   @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .95; } }
-  @media (prefers-reduced-motion: reduce) { .sky-clouds circle, .jolene img, .jolene-mist { animation: none !important; } }
+  /* Schwenky: hangs upside down from the bottom edge of the portrait, claws over the front */
+  .portrait-wrap { position: relative; margin-bottom: 80%; }
+  .portrait-wrap .schwenky { position: absolute; top: 100%; left: 3.5%; width: 90%; height: auto; margin-top: -10.1%;
+    z-index: 2; pointer-events: none; transform-origin: 51.7% 11.3%;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .35)); animation: schwenky-sway 5s ease-in-out infinite; }
+  @keyframes schwenky-sway { 0%, 100% { transform: rotate(-1.6deg); } 50% { transform: rotate(1.6deg); } }
+  @media (prefers-reduced-motion: reduce) { .sky-clouds circle, .jolene img, .jolene-mist, .portrait-wrap .schwenky { animation: none !important; } }
   body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   .forest-bg { position: absolute; left: 0; right: 0; bottom: 0; z-index: -1; pointer-events: none;
     top: calc(var(--hero-top) + var(--hero-h) * .2);
@@ -698,7 +704,10 @@
   <div class="container">
     <div class="columns is-vcentered">
       <div class="column is-one-third">
-        <figure class="image"><img src="ryan.jpg" alt="Pencil portrait of Ryan Berlin" width="900" height="973"></figure>
+        <div class="portrait-wrap">
+          <figure class="image"><img src="ryan.jpg" alt="Pencil portrait of Ryan Berlin" width="900" height="973"></figure>
+          <img class="schwenky" src="schwenky.webp" alt="" aria-hidden="true" width="700" height="697" decoding="async" loading="lazy">
+        </div>
       </div>
       <div class="column">
         <h1 class="title is-1">Ryan Berlin</h1>
