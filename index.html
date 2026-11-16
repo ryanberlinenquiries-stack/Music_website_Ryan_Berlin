@@ -606,30 +606,64 @@
     var saveData = navigator.connection && navigator.connection.saveData;
     var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (saveData || still) { v.removeAttribute('autoplay'); v.preload = 'none'; v.pause(); return; }
-    // Try to play with sound. Most browsers only allow that after the visitor has clicked or tapped,
-    // so if it's refused we play muted and switch the sound on at their first click, tap or key press,
-    // unless they've used the button themselves. The button mutes and unmutes at any time.
-    var btn = document.querySelector('.sound-toggle'), chose = false;
+    // Sound: the video itself always plays muted and loops. The music plays separately through Web Audio,
+    // which loops sample-accurately (a looping <video> stutters its audio at the restart). The loop is
+    // exactly 8 bars at 118 BPM; the picture is kept in step with the music.
+    // Browsers only allow sound after the visitor clicks, taps or presses a key, so the sound comes on at
+    // their first one unless they've used the button. The button mutes and unmutes at any time.
+    var btn = document.querySelector('.sound-toggle'), chose = false, wantOn = false;
+    var AC = window.AudioContext || window.webkitAudioContext, ctx = null, gain = null, buf = null, src = null, t0 = 0;
+    v.muted = true;
     function render() {
-      var on = !v.muted;
-      btn.classList.toggle('is-on', on);
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.setAttribute('aria-label', on ? 'Mute the video' : 'Turn the video sound on');
-      btn.querySelector('.label').textContent = on ? 'Mute' : 'Sound on';
+      btn.classList.toggle('is-on', wantOn);
+      btn.setAttribute('aria-pressed', wantOn ? 'true' : 'false');
+      btn.setAttribute('aria-label', wantOn ? 'Mute the music' : 'Turn the music on');
+      btn.querySelector('.label').textContent = wantOn ? 'Mute' : 'Sound on';
     }
-    function setSound(on) { v.muted = !on; if (on) { var q = v.play(); if (q && q.catch) q.catch(function () { v.muted = true; render(); }); } render(); }
-    btn.addEventListener('click', function (e) { e.stopPropagation(); chose = true; setSound(v.muted); });
+    function loadBuffer() {
+      if (!AC || ctx) return;
+      try { ctx = new AC(); } catch (e) { ctx = null; return; }
+      gain = ctx.createGain(); gain.gain.value = 0; gain.connect(ctx.destination);
+      fetch('hero-loop.wav').then(function (r) { return r.arrayBuffer(); })
+        .then(function (ab) { return new Promise(function (ok, no) { ctx.decodeAudioData(ab, ok, no); }); })
+        .then(function (b) { buf = b; if (wantOn) start(); })
+        .catch(function () { buf = null; });
+    }
+    function start() {
+      if (!ctx || !buf || src) return;
+      if (ctx.state === 'suspended') ctx.resume();
+      src = ctx.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(gain);
+      var off = (v.currentTime || 0) % buf.duration;
+      t0 = ctx.currentTime + 0.05 - off;
+      src.start(ctx.currentTime + 0.05, off);
+    }
+    function setSound(on) {
+      wantOn = on; render();
+      if (!ctx) loadBuffer();
+      if (!ctx) return;
+      if (ctx.state === 'suspended') ctx.resume();
+      if (on) start();
+      var now = ctx.currentTime;
+      gain.gain.cancelScheduledValues(now); gain.gain.setValueAtTime(gain.gain.value, now);
+      gain.gain.linearRampToValueAtTime(on ? 1 : 0, now + 0.15);
+    }
+    // Keep the picture in step with the music (they can drift a few milliseconds per loop).
+    setInterval(function () {
+      if (!src || !buf || v.paused || !v.isConnected) return;
+      var a = ((ctx.currentTime - t0) % buf.duration + buf.duration) % buf.duration;
+      var d = v.currentTime - a, D = buf.duration;
+      if (d > D / 2) d -= D; if (d < -D / 2) d += D;
+      if (Math.abs(d) > 0.08 && a < (v.duration || D) - 0.1) v.currentTime = a;
+    }, 500);
+    btn.addEventListener('click', function (e) { e.stopPropagation(); chose = true; setSound(!wantOn); });
     function firstGesture(e) {
       ['pointerdown', 'keydown'].forEach(function (t) { removeEventListener(t, firstGesture, true); });
       if (!chose && v.isConnected && !(e.target && e.target.closest && e.target.closest('.sound-toggle'))) setSound(true);
     }
-    v.muted = false;
-    var p = v.play();
-    if (p && p.then) p.then(render, function () {
-      v.muted = true; render();
-      v.play().catch(function () { v.pause(); });
-      ['pointerdown', 'keydown'].forEach(function (t) { addEventListener(t, firstGesture, true); });
-    });
+    ['pointerdown', 'keydown'].forEach(function (t) { addEventListener(t, firstGesture, true); });
+    window.heroStopMusic = function () { if (src) { try { src.stop(); } catch (e) {} src = null; } wantOn = false; };
+    var p = v.play(); if (p && p.catch) p.catch(function () { v.pause(); });
+    loadBuffer();
     render();
   })();
   // Swap the looping preview for the full video, played inline via Google Drive's embed player.
@@ -641,6 +675,7 @@
     fig.innerHTML = '<iframe class="has-ratio" src="https://drive.google.com/file/d/' + id + '/preview" allow="autoplay; fullscreen" allowfullscreen title="Ryan Berlin video"></iframe>';
     this.replaceWith(fig);
     var sb = document.querySelector('.sound-toggle'); if (sb) sb.remove();
+    if (window.heroStopMusic) window.heroStopMusic();
   });
 </script>
 
