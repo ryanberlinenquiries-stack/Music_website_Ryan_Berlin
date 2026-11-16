@@ -80,10 +80,10 @@
   /* Vayun flies across the sky band from left to right, disappears off the edge, then starts again. */
   .sky-vayun-lane { position: absolute; left: 0; right: 0; z-index: -2; pointer-events: none; overflow: hidden;
     top: calc(var(--hero-top) - var(--hero-h) * .45 + 14px); height: calc(var(--hero-h) * .55); }
-  .sky-vayun { position: absolute; top: 4%; left: 0; height: auto; width: min(calc(var(--hero-h) * .4), 30vw, 440px);
+  .sky-vayun { position: absolute; top: 4%; left: 0; height: auto; width: min(calc(var(--hero-h) * .62), 40vw, 560px);
     filter: brightness(.93) saturate(1.05) drop-shadow(0 6px 14px rgba(40, 10, 40, .35));
     animation: vayun-cross 13.33s linear infinite, vayun-bob 3s ease-in-out infinite; }
-  @keyframes vayun-cross { 0% { left: -32%; } 85% { left: 104%; } 100% { left: 104%; } }
+  @keyframes vayun-cross { 0% { left: -42%; } 85% { left: 104%; } 100% { left: 104%; } }
   @keyframes vayun-bob { 0%, 100% { margin-top: 0; } 50% { margin-top: 1.4%; } }
   @media (prefers-reduced-motion: reduce) { .sky-vayun { animation: none; left: 12vw; } }
   html[data-hero="hidden"] .sky-vayun-lane { display: none; }
@@ -569,7 +569,7 @@
 </head>
 <body>
 <div class="forest-bg" aria-hidden="true"><div></div></div>
-<div class="sky-vayun-lane" aria-hidden="true"><img class="sky-vayun" src="vayun-flying.webp" alt="" width="340" height="324" decoding="async"></div>
+<div class="sky-vayun-lane" aria-hidden="true"><img class="sky-vayun" src="vayun-flying-2.webp" alt="" width="560" height="316" decoding="async"></div>
 <!-- Sunset clouds (and one unicorn) floating in the background sky -->
 <svg class="sky-clouds" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
   <g class="sky-sparkles" fill="#fff4dc">
