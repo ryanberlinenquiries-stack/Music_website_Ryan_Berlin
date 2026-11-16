@@ -53,15 +53,30 @@
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
   .bio .content { font-size: 1.35rem; }
+  .bio .title, .bio .content, .albums h2.title { text-shadow: 0 1px 14px rgba(0, 0, 0, .65), 0 0 2px rgba(0, 0, 0, .4); }
   /* Background: top of a lush forest photo (the trees) rising from the bottom, neon haze glowing over it.
      Photo: Simona D'Auria on Unsplash (Unsplash License), unsplash.com/photos/NI437pgc5VE */
   body { background: transparent; }
+  /* Sky: a surreal, bilious, reverb-soaked rose-and-yellow sunset the forest fades up into.
+     Glows echo upward from the horizon like reverb tails; faint ripples drift slowly. */
+  html::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      repeating-linear-gradient(to bottom, rgba(255, 225, 170, .03) 0 2px, transparent 2px 16px),
+      radial-gradient(ellipse 130% 22% at 50% 46%, rgba(235, 200, 70, .45), transparent 70%),
+      radial-gradient(ellipse 140% 20% at 42% 36%, rgba(225, 185, 80, .28), transparent 70%),
+      radial-gradient(ellipse 150% 18% at 58% 26%, rgba(220, 120, 140, .30), transparent 70%),
+      radial-gradient(ellipse 170% 16% at 46% 15%, rgba(200, 90, 130, .22), transparent 70%),
+      radial-gradient(ellipse 80% 30% at 85% 4%,   rgba(150, 70, 160, .30), transparent 70%),
+      linear-gradient(to bottom, #2a0f22 0%, #5a2240 16%, #7a3a4a 30%, #8a6a2c 44%, #6f6a22 52%, #1c1f0c 66%, #000 82%);
+    animation: sky-reverb 60s linear infinite; }
+  @keyframes sky-reverb { to { background-position: 0 160px, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; } }
+  @media (prefers-reduced-motion: reduce) { html::before { animation: none; } }
   body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   body::before {
     background: url("https://images.unsplash.com/photo-1671485928166-2e99713f8752?auto=format&rect=0,0,6048,2100&w=2400&q=70") center bottom / cover no-repeat;
     filter: brightness(.75) saturate(1.25);
-    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 22%, rgba(0,0,0,.4) 50%, transparent 82%);
-            mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 22%, rgba(0,0,0,.4) 50%, transparent 82%);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 20%, rgba(0,0,0,.45) 42%, rgba(0,0,0,.15) 58%, transparent 72%);
+            mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 20%, rgba(0,0,0,.45) 42%, rgba(0,0,0,.15) 58%, transparent 72%);
   }
   body::after {
     background:
