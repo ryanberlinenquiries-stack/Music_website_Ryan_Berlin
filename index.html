@@ -653,7 +653,7 @@
       <div class="column">
         <h1 class="title is-1">Ryan Berlin</h1>
         <div class="content is-medium">
-          <p>A reclusive raconteur.</p>
+          <p>Reclusive raconteur.</p>
           <p>Hard yet soft, light yet heavy; routinely disenchanted, yet never for long.</p>
           <p>Ryan is a philanthropist of small mercies, an unesteemed writer, and dilettante of oddities.</p>
           <p>If the light wavers, you’ll glimpse him flitting 'midst fey forests, soaring through bilious, reverb-soaked skies, or nestled in the cracks of the acrapolis — roaming its subfuscous streets, protecting ne’er-do-wells and ambitionists alike: an unsung vigilante to the putrescent profane, an abstruse hero to the hallowed Areopagites.</p>
@@ -1002,7 +1002,7 @@
 
 <script>
 (function () {
-  var KEY = 'ryan-bulma-copy-v3';
+  var KEY = 'ryan-bulma-copy-v4';
   // [selector, key prefix]. Keys are prefix + position, so keep the page order stable or bump KEY.
   var FIELDS = [
     ['.topbar-brand', 'brand'],
@@ -1744,7 +1744,7 @@
         : '(no changes)');
       out.push('', '== Layout, sizes & tacky mode (replace line 2 of index.html) ==');
       out.push(window.layoutExport ? window.layoutExport() : '(unavailable)');
-      var copy = get('ryan-bulma-copy-v3');
+      var copy = get('ryan-bulma-copy-v4');
       out.push('', '== Text changes ==');
       out.push(copy && Object.keys(copy).length ? Object.keys(copy).map(function (k) { return k + ':\n' + copy[k]; }).join('\n\n') : '(no changes)');
       var footer = get('ryan-footer-v1');
