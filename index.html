@@ -53,12 +53,12 @@
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
   .bio .content { font-size: 1.35rem; }
-  /* Background: lush forest photo rising from the bottom, neon haze glowing over it.
+  /* Background: top of a lush forest photo (the trees) rising from the bottom, neon haze glowing over it.
      Photo: Simona D'Auria on Unsplash (Unsplash License), unsplash.com/photos/NI437pgc5VE */
   body { background: transparent; }
   body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   body::before {
-    background: url("https://images.unsplash.com/photo-1671485928166-2e99713f8752?auto=format&fit=crop&w=1920&q=70") center bottom / cover no-repeat;
+    background: url("https://images.unsplash.com/photo-1671485928166-2e99713f8752?auto=format&rect=0,0,6048,2100&w=2400&q=70") center bottom / cover no-repeat;
     filter: brightness(.75) saturate(1.25);
     -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 22%, rgba(0,0,0,.4) 50%, transparent 82%);
             mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 22%, rgba(0,0,0,.4) 50%, transparent 82%);
