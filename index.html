@@ -66,8 +66,10 @@
       url("https://images.unsplash.com/photo-1534271057238-c2c170a76672?auto=format&fit=crop&w=2400&q=70") center top / cover no-repeat,
       #2a1a38;
     }
-  .sky-clouds { position: fixed; left: 0; top: 0; width: 100%; height: 62vh; z-index: -2; pointer-events: none; }
-  .sky-unicorn { position: fixed; right: 9vw; top: 14vh; width: clamp(110px, 15vw, 230px); height: auto; z-index: -2; pointer-events: none;
+  .sky-clouds { position: fixed; left: 0; top: 0; width: 100%; height: 100vh; z-index: -2; pointer-events: none; }
+  .unicorn-slot { display: flex; align-items: center; justify-content: center; }
+  html:not([data-albums="2"]) .unicorn-slot { display: none !important; }
+  .sky-unicorn { width: min(78%, 380px); height: auto; pointer-events: none;
     filter: drop-shadow(0 0 1.5px rgba(255, 214, 160, .95)) drop-shadow(0 0 14px rgba(255, 190, 150, .55)) drop-shadow(0 0 40px rgba(255, 170, 200, .35));
     animation: unicorn-float 9s ease-in-out infinite; }
   @keyframes unicorn-float { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
@@ -75,7 +77,6 @@
   .sky-clouds .sky-sparkles circle:nth-child(3n)   { animation-duration: 5.5s; animation-delay: -2s; }
   .sky-clouds .sky-sparkles circle:nth-child(3n+1) { animation-duration: 3.2s; animation-delay: -1s; }
   @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .95; } }
-  @media (max-width: 700px) { .sky-unicorn { right: 6vw; top: 18vh; width: 26vw; } }
   @media (prefers-reduced-motion: reduce) { .sky-clouds circle, .sky-unicorn { animation: none !important; } }
   body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   body::before {
@@ -533,15 +534,7 @@
     <circle cx="1560" cy="150" r="1.2"/><circle cx="430" cy="200" r="1"/><circle cx="1050" cy="180" r="1.1"/>
   </g>
 </svg>
-<!-- A rearing unicorn silhouetted against the sunset. Shape: Pinhead icons "unicorn-rearing" (CC0). -->
-<svg class="sky-unicorn" viewBox="0 0 15 15" aria-hidden="true" focusable="false">
-  <defs>
-    <linearGradient id="unicorn-shade" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3a1f3f"/><stop offset="1" stop-color="#120a1c"/>
-    </linearGradient>
-  </defs>
-  <g fill="url(#unicorn-shade)"><path  d="M9.97 10.31c1.21-1.29.9-2.07.21-1.9l-.02.04l-.04.06c-.16.23-.69.78-2.13.78c-.47 0-1.52.4-1.52.4c-.23.99-.96 1.53-1.71 2.15l-.15.16c-.13.16-.23.3-.23.35c-.01.06.2.6.47 1.2c.29.47.86.52.53 1.36c-.32.03-.56.14-.82.07l-.53-1.24s-.5-1.07-.54-1.24c-.03-.17.14-1.01.14-1.01c.07-.56.29-.98.19-1.18s-.32-.36-.37-.65c-.03-.26-.06-.32-.18-.32c-1.41.65-.53 1.54-.43 3.24c-.53.05-.75-.14-1.07.24c-.74-.45-.34-.53-.73-.7c-.2-1.28.38-2.66 1.28-3.23c.22-.1.51-.19.69-.23l.1-.02c.27-.04.33-.08.46-.4c.21-.48.78-.92 1.53-1.05l.17-.03l.44-.08c1.44-.27 2.54-.74 1.41-1.65l.11-.28c.26-.63.61-1.28 1.32-2.41c.05-.07.2-.13.35-.19l.59-.18c.21-.08.2-.1.26-.44c.08-.4.19-.42.4-.05l.14.26c.02.03.03.05.04.07l.05.07c.03.04-.01.02.05.06l.05-.1l.27-.53c.32-.69.79-1.69.79-1.69l.08-.02c.08-.01.17.01.17.17l-.7 2.04c-.07.22-.12.38-.12.41c.16.1.17.14.23.3c.08.14.29.34.48.46l.15.11c.15.1.17.16.15.33v.08c-.02.17-.04.27-.09.31c-.13.09-.31-.05-.79-.08c-.49-.03-.54.11-.9 0c-.02.03.01.25-.01.54l-.01.13c-.05.55-.03.69.16 1.02l.17.38c.14.31.25.61.24.95c1.34-.07 2.18.59 2.67 1.55l.07.06c.17.17.59.65.49 1.24l-1.05.01c.06-1.14-.47-1.73-1.47-1.84l.21.6c.02.05.03.09.03.09c-.11.48-.39.88-.37 1.24c.01.4-.27.56-.55.72c-.31 0-.59-.34-.81-.51"/></g>
-</svg>
+
 
 <!-- Brand logos: Simple Icons (CC0), simple-icons@13.0.0 -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -658,6 +651,17 @@
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
           </footer>
         </div>
+      </div>
+      <div class="column is-half unicorn-slot is-hidden-mobile">
+        <!-- A rearing unicorn silhouetted against the sunset. Shape: Pinhead icons "unicorn-rearing" (CC0). -->
+        <svg class="sky-unicorn" role="presentation" viewBox="0 0 15 15" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="unicorn-shade" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3a1f3f"/><stop offset="1" stop-color="#120a1c"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#unicorn-shade)"><path  d="M9.97 10.31c1.21-1.29.9-2.07.21-1.9l-.02.04l-.04.06c-.16.23-.69.78-2.13.78c-.47 0-1.52.4-1.52.4c-.23.99-.96 1.53-1.71 2.15l-.15.16c-.13.16-.23.3-.23.35c-.01.06.2.6.47 1.2c.29.47.86.52.53 1.36c-.32.03-.56.14-.82.07l-.53-1.24s-.5-1.07-.54-1.24c-.03-.17.14-1.01.14-1.01c.07-.56.29-.98.19-1.18s-.32-.36-.37-.65c-.03-.26-.06-.32-.18-.32c-1.41.65-.53 1.54-.43 3.24c-.53.05-.75-.14-1.07.24c-.74-.45-.34-.53-.73-.7c-.2-1.28.38-2.66 1.28-3.23c.22-.1.51-.19.69-.23l.1-.02c.27-.04.33-.08.46-.4c.21-.48.78-.92 1.53-1.05l.17-.03l.44-.08c1.44-.27 2.54-.74 1.41-1.65l.11-.28c.26-.63.61-1.28 1.32-2.41c.05-.07.2-.13.35-.19l.59-.18c.21-.08.2-.1.26-.44c.08-.4.19-.42.4-.05l.14.26c.02.03.03.05.04.07l.05.07c.03.04-.01.02.05.06l.05-.1l.27-.53c.32-.69.79-1.69.79-1.69l.08-.02c.08-.01.17.01.17.17l-.7 2.04c-.07.22-.12.38-.12.41c.16.1.17.14.23.3c.08.14.29.34.48.46l.15.11c.15.1.17.16.15.33v.08c-.02.17-.04.27-.09.31c-.13.09-.31-.05-.79-.08c-.49-.03-.54.11-.9 0c-.02.03.01.25-.01.54l-.01.13c-.05.55-.03.69.16 1.02l.17.38c.14.31.25.61.24.95c1.34-.07 2.18.59 2.67 1.55l.07.06c.17.17.59.65.49 1.24l-1.05.01c.06-1.14-.47-1.73-1.47-1.84l.21.6c.02.05.03.09.03.09c-.11.48-.39.88-.37 1.24c.01.4-.27.56-.55.72c-.31 0-.59-.34-.81-.51"/></g>
+        </svg>
       </div>
     </div>
   </div>
