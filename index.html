@@ -80,16 +80,16 @@
   html[data-hero="hidden"] .sky-vayun { display: none; }
   .sky-clouds { position: absolute; left: 0; top: 0; width: 100%; height: calc(var(--hero-top) + var(--hero-h) * .3); z-index: -2; pointer-events: none; }
   .albums { position: relative; }
-  .jolene { position: absolute; right: 9%; bottom: -3rem; z-index: 0; width: clamp(120px, 15vw, 230px); pointer-events: none; }
+  .jolene { position: absolute; right: 5%; bottom: -3rem; z-index: 0; width: clamp(180px, 24vw, 380px); pointer-events: none; }
   .jolene img { display: block; width: 100%; height: auto;
     filter: brightness(.9) drop-shadow(0 0 16px rgba(170, 80, 255, .35)); animation: jolene-glow 5s ease-in-out infinite; }
-  .jolene-mist { position: absolute; left: 82%; top: 42%; width: 70%; height: 22%; border-radius: 50%;
+  .jolene-mist { position: absolute; left: 82%; top: 76%; width: 46%; height: 18%; border-radius: 50%;
     background: radial-gradient(ellipse at 20% 50%, rgba(176, 90, 255, .55), rgba(140, 60, 220, .2) 45%, transparent 70%);
     filter: blur(8px); transform-origin: left center; animation: jolene-breath 4.5s ease-in-out infinite; }
   @keyframes jolene-glow { 0%, 100% { filter: brightness(.9) drop-shadow(0 0 12px rgba(170, 80, 255, .25)); }
                            50%      { filter: brightness(.95) drop-shadow(0 0 22px rgba(190, 100, 255, .5)); } }
   @keyframes jolene-breath { 0%, 100% { opacity: .25; transform: scale(.7, .8); } 45% { opacity: .85; transform: translateX(6%) scale(1.15, 1.1); } }
-  @media (max-width: 768px) { .jolene { right: 4%; width: 110px; } }
+  @media (max-width: 768px) { .jolene { right: 2%; width: 150px; } }
   .sky-clouds .sky-sparkles circle { filter: drop-shadow(0 0 3px #fff2c4); animation: twinkle 4s ease-in-out infinite; }
   .sky-clouds .sky-sparkles circle:nth-child(3n)   { animation-duration: 5.5s; animation-delay: -2s; }
   .sky-clouds .sky-sparkles circle:nth-child(3n+1) { animation-duration: 3.2s; animation-delay: -1s; }
@@ -591,7 +591,6 @@
   <figure class="image is-16by9">
     <video class="has-ratio" src="hero.mp4" poster="hero.jpg" autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
   </figure>
-  <div class="play-badge" aria-hidden="true"><span></span></div>
 </a>
 <button type="button" class="sound-toggle" aria-pressed="false">
   <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -717,7 +716,7 @@
   </div>
   <!-- Jolene on the forest floor: horn glow and nostril mist animate gently -->
   <div class="jolene" aria-hidden="true">
-    <img src="jolene.webp" alt="" width="531" height="800" decoding="async" loading="lazy">
+    <img src="jolene.webp" alt="" width="776" height="729" decoding="async" loading="lazy">
     <span class="jolene-mist"></span>
   </div>
 </section>
