@@ -65,8 +65,8 @@
      that the forest fades up into, with a soft golden glow low down. */
   html::before { content: ""; position: absolute; left: 0; right: 0; top: 0; z-index: -3; pointer-events: none;
     height: calc(var(--hero-top) + var(--hero-h));
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--hero-top) + var(--hero-h) * .35), transparent calc(var(--hero-top) + var(--hero-h) * .9));
-            mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--hero-top) + var(--hero-h) * .35), transparent calc(var(--hero-top) + var(--hero-h) * .9));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--hero-top) + var(--hero-h) * .2), rgba(0,0,0,.5) calc(var(--hero-top) + var(--hero-h) * .5), transparent calc(var(--hero-top) + var(--hero-h) * .8));
+            mask-image: linear-gradient(to bottom, #000 0, #000 calc(var(--hero-top) + var(--hero-h) * .2), rgba(0,0,0,.5) calc(var(--hero-top) + var(--hero-h) * .5), transparent calc(var(--hero-top) + var(--hero-h) * .8));
     background:
       radial-gradient(ellipse 90% 30% at 50% 45%, rgba(255, 205, 120, .28), transparent 70%),
       url("https://images.unsplash.com/photo-1534271057238-c2c170a76672?auto=format&fit=crop&w=2400&q=70") center top / cover no-repeat,
@@ -88,9 +88,9 @@
   @media (prefers-reduced-motion: reduce) { .sky-clouds circle, .forest-unicorn * { animation: none !important; } }
   body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   .forest-bg { position: absolute; left: 0; right: 0; bottom: 0; z-index: -1; pointer-events: none;
-    top: calc(var(--hero-top) + var(--hero-h) * .25);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 calc(var(--hero-h) * .6));
-            mask-image: linear-gradient(to bottom, transparent 0, #000 calc(var(--hero-h) * .6)); }
+    top: calc(var(--hero-top) + var(--hero-h) * .2);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.5) calc(var(--hero-h) * .3), #000 calc(var(--hero-h) * .65));
+            mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.5) calc(var(--hero-h) * .3), #000 calc(var(--hero-h) * .65)); }
   .forest-bg > div { position: sticky; top: 0; height: 100vh;
     background: url("https://images.unsplash.com/photo-1671485928166-2e99713f8752?auto=format&rect=0,0,6048,2600&w=2400&q=72") center top / cover no-repeat;
     filter: brightness(.8) saturate(1.25); }
@@ -312,7 +312,9 @@
 
   /* Hero */
   .hero-wrap figure { overflow: hidden; }
-  .hero-wrap video { object-fit: cover; opacity: .6; }
+  .hero-wrap video { object-fit: cover; opacity: .6;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.35) 12%, #000 34%, #000 66%, rgba(0,0,0,.35) 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.35) 12%, #000 34%, #000 66%, rgba(0,0,0,.35) 88%, transparent 100%); }
   html[data-hero="contained"] .hero-wrap { max-width: 1100px; margin: 2rem auto 0; padding: 0 1.5rem; }
   html[data-hero="contained"] .hero-wrap figure { border-radius: var(--lx-radius); }
   html[data-hero="cinema"] .hero-wrap .image.is-16by9 { aspect-ratio: 21 / 9; }
