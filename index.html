@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Bebas+Neue&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Bebas+Neue&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1&display=swap">
 <style>
   /* ===== Design tokens: edit here, or use the 🎨 picker on the page ===== */
   :root {
@@ -37,7 +37,7 @@
 
     /* Fonts (Google Fonts load automatically when chosen in the picker) */
     --font-body: "Lora", Georgia, serif;
-    --font-heading: "Bebas Neue", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-heading: "Fraunces", Georgia, serif;
     --font-nav: "Lora", Georgia, serif;
 
     --nav-opacity-desktop: 0.9;  /* nav background, desktop */
@@ -48,7 +48,7 @@
   /* ===== Base ===== */
   html, body { background: var(--color-bg); color: var(--color-text); }
   html, body, .button, .card-footer-item { font-family: var(--font-body); }
-  .title, .subtitle { font-family: var(--font-heading); }
+  .title, .subtitle { font-family: var(--font-heading); font-variation-settings: "SOFT" 100, "WONK" 1; }
   .topbar, .topbar-brand, .artist-links a { font-family: var(--font-nav); }
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
@@ -433,7 +433,7 @@
   .site-footer a:hover, .site-footer a:focus-visible { color: var(--color-footer-link); }
   .site-footer .f-inner { max-width: 1100px; margin: 0 auto; }
   .site-footer .f-top { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(var(--f-cols, 1), minmax(0, 1fr)); gap: 2rem; }
-  .site-footer .f-brand { font-family: var(--font-heading); font-size: 2rem; line-height: 1.1; color: var(--color-footer-link); }
+  .site-footer .f-brand { font-family: var(--font-heading); font-variation-settings: "SOFT" 100, "WONK" 1; font-size: 2rem; line-height: 1.1; color: var(--color-footer-link); }
   .site-footer .f-tagline { margin-top: 0.5rem; max-width: 34ch; }
   .site-footer .f-col h4 { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; margin-bottom: .75rem; color: var(--color-footer-link); }
   .site-footer .f-col ul { list-style: none; margin: 0; padding: 0; }
@@ -676,6 +676,7 @@
     ['Oswald',           '"Oswald"' + SANS, 'Oswald:wght@400;600;700'],
     ['Bebas Neue',       '"Bebas Neue"' + SANS, 'Bebas+Neue'],
     ['Archivo Black',    '"Archivo Black"' + SANS, 'Archivo+Black'],
+    ['Fraunces',         '"Fraunces", Georgia, serif', 'Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1'],
     ['Playfair Display', '"Playfair Display", Georgia, serif', 'Playfair+Display:wght@400;700'],
     ['Lora',             '"Lora", Georgia, serif', 'Lora:wght@400;600;700'],
     ['Merriweather',     '"Merriweather", Georgia, serif', 'Merriweather:wght@400;700'],
@@ -686,7 +687,7 @@
   ];
   function fontByValue(v) { for (var i = 0; i < FONTS.length; i++) if (FONTS[i][1] === v) return FONTS[i]; return null; }
   function gfUrl(spec) { return 'https://fonts.googleapis.com/css2?family=' + spec + '&display=swap'; }
-  var loadedFonts = { 'Lora:wght@400;600;700': true, 'Bebas+Neue': true };  // already linked in <head>
+  var loadedFonts = { 'Lora:wght@400;600;700': true, 'Bebas+Neue': true, 'Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1': true };  // already linked in <head>
   function loadAllPreviews() {   // one request so every option can render in its own font
     var specs = FONTS.map(function (f) { return f[2]; }).filter(function (sp) { return sp && !loadedFonts[sp]; });
     if (!specs.length) return;
