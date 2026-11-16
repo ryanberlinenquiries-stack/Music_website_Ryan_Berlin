@@ -11,12 +11,12 @@
 <style>
   /* ===== Design tokens: edit here, or use the 🎨 picker on the page ===== */
   :root {
-    --color-bg: #ffffff;
-    --color-text: #4a4a4a;
-    --color-heading: #1a1a1a;
-    --color-nav-bg: #ffffff;
-    --color-nav-text: #1a1a1a;
-    --color-nav-border: #e5e5e5;
+    --color-bg: #000000;
+    --color-text: #cfcfcf;
+    --color-heading: #ffffff;
+    --color-nav-bg: #000000;
+    --color-nav-text: #ffffff;
+    --color-nav-border: #222222;
     /* Main artist links: official brand colours */
     --color-spotify: #1db954;
     --color-spotify-text: #000000;
@@ -26,14 +26,14 @@
     --color-youtube-text: #ffffff;
     --color-bandcamp: #408294;
     --color-bandcamp-text: #ffffff;
-    --color-card-bg: #ffffff;
-    --color-card-border: #ededed;
-    --color-card-link: #1f3fbf;
-    --color-card-link-hover: #142a80;
-    --color-footer-bg: #141414;
+    --color-card-bg: #111111;
+    --color-card-border: #262626;
+    --color-card-link: #9db0ff;
+    --color-card-link-hover: #c7d2ff;
+    --color-footer-bg: #0a0a0a;
     --color-footer-text: #bdbdbd;
     --color-footer-link: #ffffff;
-    --color-img-border: #1a1a1a;
+    --color-img-border: #ffffff;
 
     /* Fonts (Google Fonts load automatically when chosen in the picker) */
     --font-body: "Lora", Georgia, serif;
@@ -52,6 +52,9 @@
   .topbar, .topbar-brand, .artist-links a { font-family: var(--font-nav); }
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
+  .subtitle { color: var(--color-text); }
+  .card { color: var(--color-text); }
+  .card-footer, .card-footer-item { border-color: var(--color-card-border); }
 
   /* ===== Sticky top bar with the four artist links ===== */
   .topbar {
@@ -548,7 +551,7 @@
           <div class="card-image"><figure class="image is-square"><img src="album-3.jpg" alt="Paradox of Choice cover"></figure></div>
           <div class="card-content">
             <p class="title is-4">Paradox of Choice</p>
-            <p class="subtitle is-6">TBA</p>
+            <p class="subtitle is-6">TBA | Dec 2026</p>
           </div>
           <footer class="card-footer">
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
@@ -563,7 +566,7 @@
           <div class="card-image"><figure class="image is-square"><img src="refurbished.jpg" alt="Refurbished cover"></figure></div>
           <div class="card-content">
             <p class="title is-4">Refurbished</p>
-            <p class="subtitle is-6">2024</p>
+            <p class="subtitle is-6">TBA | 2027</p>
           </div>
           <footer class="card-footer">
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
@@ -575,10 +578,10 @@
       </div>
       <div class="column is-half">
         <div class="card">
-          <div class="card-image"><figure class="image is-square"><img src="album-2.jpg" alt="Northbound Static cover"></figure></div>
+          <div class="card-image"><figure class="image is-square"><img src="album-2.jpg" alt="EP cover"></figure></div>
           <div class="card-content">
-            <p class="title is-4">Northbound Static</p>
-            <p class="subtitle is-6">2022</p>
+            <p class="title is-4">EP</p>
+            <p class="subtitle is-6">2019</p>
           </div>
           <footer class="card-footer">
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
