@@ -747,7 +747,7 @@
           <div class="card-image"><figure class="image is-square"><img src="album-2.jpg" alt="EP cover"></figure></div>
           <div class="card-content">
             <p class="title is-4">EP</p>
-            <p class="subtitle is-6">2019</p>
+            <p class="subtitle is-6">2018</p>
           </div>
           <footer class="card-footer">
             <a href="https://open.spotify.com/album/6hQvhM7JjBws641NU3oaSS" target="_blank" rel="noopener" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
@@ -1047,7 +1047,7 @@
 
 <script>
 (function () {
-  var KEY = 'ryan-bulma-copy-v4';
+  var KEY = 'ryan-bulma-copy-v5';
   // [selector, key prefix]. Keys are prefix + position, so keep the page order stable or bump KEY.
   var FIELDS = [
     ['.topbar-brand', 'brand'],
@@ -1789,7 +1789,7 @@
         : '(no changes)');
       out.push('', '== Layout, sizes & tacky mode (replace line 2 of index.html) ==');
       out.push(window.layoutExport ? window.layoutExport() : '(unavailable)');
-      var copy = get('ryan-bulma-copy-v4');
+      var copy = get('ryan-bulma-copy-v5');
       out.push('', '== Text changes ==');
       out.push(copy && Object.keys(copy).length ? Object.keys(copy).map(function (k) { return k + ':\n' + copy[k]; }).join('\n\n') : '(no changes)');
       var footer = get('ryan-footer-v1');
