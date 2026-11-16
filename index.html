@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1&display=swap">
 <style>
   /* ===== Design tokens: edit here, or use the 🎨 picker on the page ===== */
   :root {
@@ -36,9 +36,9 @@
     --color-img-border: #ffffff;
 
     /* Fonts (Google Fonts load automatically when chosen in the picker) */
-    --font-body: "Alegreya", Georgia, serif;
+    --font-body: "EB Garamond", Garamond, Georgia, serif;
     --font-heading: "Fraunces", Georgia, serif;
-    --font-nav: "Alegreya", Georgia, serif;
+    --font-nav: "EB Garamond", Garamond, Georgia, serif;
 
     --nav-opacity-desktop: 0.9;  /* nav background, desktop */
     --nav-opacity-mobile: 1;     /* nav background, mobile (solid) */
@@ -52,6 +52,7 @@
   .topbar, .topbar-brand, .artist-links a { font-family: var(--font-nav); }
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
+  .bio .content { font-size: 1.35rem; }
   .subtitle { color: var(--color-text); }
   .card { color: var(--color-text); }
   .albums .card-content .subtitle, .albums .card-footer-item { font-family: "Lora", Georgia, serif; font-variation-settings: normal; }
@@ -685,6 +686,7 @@
     ['Archivo Black',    '"Archivo Black"' + SANS, 'Archivo+Black'],
     ['Fraunces',         '"Fraunces", Georgia, serif', 'Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1'],
     ['Playfair Display', '"Playfair Display", Georgia, serif', 'Playfair+Display:wght@400;700'],
+    ['EB Garamond',      '"EB Garamond", Garamond, Georgia, serif', 'EB+Garamond:ital,wght@0,400;0,500;0,600;1,400'],
     ['Alegreya',         '"Alegreya", Georgia, serif', 'Alegreya:ital,wght@0,400;0,500;0,700;1,400'],
     ['Lora',             '"Lora", Georgia, serif', 'Lora:wght@400;600;700'],
     ['Merriweather',     '"Merriweather", Georgia, serif', 'Merriweather:wght@400;700'],
@@ -695,7 +697,7 @@
   ];
   function fontByValue(v) { for (var i = 0; i < FONTS.length; i++) if (FONTS[i][1] === v) return FONTS[i]; return null; }
   function gfUrl(spec) { return 'https://fonts.googleapis.com/css2?family=' + spec + '&display=swap'; }
-  var loadedFonts = { 'Lora:wght@400;600;700': true, 'Bebas+Neue': true, 'Alegreya:ital,wght@0,400;0,500;0,700;1,400': true, 'Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1': true };  // already linked in <head>
+  var loadedFonts = { 'Lora:wght@400;600;700': true, 'Bebas+Neue': true, 'Alegreya:ital,wght@0,400;0,500;0,700;1,400': true, 'EB+Garamond:ital,wght@0,400;0,500;0,600;1,400': true, 'Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1': true };  // already linked in <head>
   function loadAllPreviews() {   // one request so every option can render in its own font
     var specs = FONTS.map(function (f) { return f[2]; }).filter(function (sp) { return sp && !loadedFonts[sp]; });
     if (!specs.length) return;
