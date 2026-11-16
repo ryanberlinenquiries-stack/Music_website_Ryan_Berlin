@@ -78,7 +78,7 @@
     }
   /* Vayun, the winged tiger, gliding through the sky band above the video */
   .sky-vayun { position: absolute; z-index: -2; pointer-events: none; height: auto;
-    width: min(calc(var(--hero-h) * .5), 34vw); left: 12vw;
+    width: min(calc(var(--hero-h) * .4), 30vw, 440px); left: 12vw;
     top: calc(var(--hero-top) - var(--hero-h) * .45 + 14px);
     filter: brightness(.93) saturate(1.05) drop-shadow(0 6px 14px rgba(40, 10, 40, .35)); }
   html[data-hero="hidden"] .sky-vayun { display: none; }
@@ -564,7 +564,7 @@
 </head>
 <body>
 <div class="forest-bg" aria-hidden="true"><div></div></div>
-<img class="sky-vayun" src="vayun.webp" alt="" aria-hidden="true" width="824" height="817" decoding="async">
+<img class="sky-vayun" src="vayun-flying.webp" alt="" aria-hidden="true" width="340" height="324" decoding="async">
 <!-- Sunset clouds (and one unicorn) floating in the background sky -->
 <svg class="sky-clouds" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
   <g class="sky-sparkles" fill="#fff4dc">
