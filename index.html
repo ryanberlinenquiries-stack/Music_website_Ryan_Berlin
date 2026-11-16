@@ -82,7 +82,7 @@
     top: calc(var(--hero-top) - var(--hero-h) * .45 + 14px); height: calc(var(--hero-h) * .55); }
   .sky-vayun { position: absolute; top: 4%; left: 0; height: auto; width: min(calc(var(--hero-h) * .4), 30vw, 440px);
     filter: brightness(.93) saturate(1.05) drop-shadow(0 6px 14px rgba(40, 10, 40, .35));
-    animation: vayun-cross 20s linear infinite, vayun-bob 3s ease-in-out infinite; }
+    animation: vayun-cross 13.33s linear infinite, vayun-bob 3s ease-in-out infinite; }
   @keyframes vayun-cross { 0% { left: -32%; } 85% { left: 104%; } 100% { left: 104%; } }
   @keyframes vayun-bob { 0%, 100% { margin-top: 0; } 50% { margin-top: 1.4%; } }
   @media (prefers-reduced-motion: reduce) { .sky-vayun { animation: none; left: 12vw; } }
