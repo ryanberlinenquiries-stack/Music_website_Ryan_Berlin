@@ -53,6 +53,9 @@
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
   .bio .content { font-size: 1.35rem; }
+  /* Bio runs the full width of the page so the text lines up with the left edge (same inset as "Ryan Berlin" in the top bar). */
+  .bio .container { max-width: none; margin: 0; }
+  .bio .content { max-width: 62ch; }
   .bio .title, .bio .content, .albums h2.title { text-shadow: 0 1px 14px rgba(0, 0, 0, .65), 0 0 2px rgba(0, 0, 0, .4); }
   /* Background: forest photo (the tree tops) below the video, neon haze glowing over everything.
      Photo: Simona D'Auria on Unsplash (Unsplash License), unsplash.com/photos/NI437pgc5VE */
