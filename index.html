@@ -74,14 +74,9 @@
     }
   /* Vayun, the winged tiger, gliding through the sky band above the video */
   .sky-vayun { position: absolute; z-index: -2; pointer-events: none; height: auto;
-    width: min(calc(var(--hero-h) * .5), 34vw); left: 9vw;
-    top: calc(var(--hero-top) - var(--hero-h) * .5);
-    filter: brightness(.93) saturate(1.05) drop-shadow(0 6px 14px rgba(40, 10, 40, .35));
-    animation: vayun-glide 26s ease-in-out infinite alternate; }
-  @keyframes vayun-glide {
-    0%   { transform: translate(0, 0) rotate(-2deg); }
-    50%  { transform: translate(14vw, -1.2vw) rotate(1deg); }
-    100% { transform: translate(28vw, .4vw) rotate(-1deg); } }
+    width: min(calc(var(--hero-h) * .5), 34vw); left: 12vw;
+    top: calc(var(--hero-top) - var(--hero-h) * .45 + 14px);
+    filter: brightness(.93) saturate(1.05) drop-shadow(0 6px 14px rgba(40, 10, 40, .35)); }
   html[data-hero="hidden"] .sky-vayun { display: none; }
   .sky-clouds { position: absolute; left: 0; top: 0; width: 100%; height: calc(var(--hero-top) + var(--hero-h) * .3); z-index: -2; pointer-events: none; }
   .albums { position: relative; }
@@ -99,7 +94,7 @@
   .sky-clouds .sky-sparkles circle:nth-child(3n)   { animation-duration: 5.5s; animation-delay: -2s; }
   .sky-clouds .sky-sparkles circle:nth-child(3n+1) { animation-duration: 3.2s; animation-delay: -1s; }
   @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .95; } }
-  @media (prefers-reduced-motion: reduce) { .sky-clouds circle, .sky-vayun, .jolene img, .jolene-mist { animation: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .sky-clouds circle, .jolene img, .jolene-mist { animation: none !important; } }
   body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   .forest-bg { position: absolute; left: 0; right: 0; bottom: 0; z-index: -1; pointer-events: none;
     top: calc(var(--hero-top) + var(--hero-h) * .2);
@@ -561,7 +556,7 @@
 </head>
 <body>
 <div class="forest-bg" aria-hidden="true"><div></div></div>
-<img class="sky-vayun" src="vayun.webp" alt="" aria-hidden="true" width="820" height="813" decoding="async">
+<img class="sky-vayun" src="vayun.webp" alt="" aria-hidden="true" width="824" height="817" decoding="async">
 <!-- Sunset clouds (and one unicorn) floating in the background sky -->
 <svg class="sky-clouds" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
   <g class="sky-sparkles" fill="#fff4dc">
