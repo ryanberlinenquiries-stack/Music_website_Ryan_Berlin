@@ -103,6 +103,8 @@
   .sky-clouds .sky-sparkles circle:nth-child(3n)   { animation-duration: 5.5s; animation-delay: -2s; }
   .sky-clouds .sky-sparkles circle:nth-child(3n+1) { animation-duration: 3.2s; animation-delay: -1s; }
   @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .95; } }
+  /* Links with nowhere to go yet (href="#") are greyed out and can't be clicked */
+  a[href="#"] { filter: grayscale(1); opacity: .35; cursor: default; pointer-events: none; }
   /* Body text: brighter, with a slow shimmer that quickens (and throws sparkles) under the cursor */
   .bio .content p { line-height: 1.7; letter-spacing: .005em; }
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
@@ -1444,7 +1446,7 @@
     return wrap;
   }
   function copyright() { return String(cfg.copyright || '').replace(/\{year\}/g, new Date().getFullYear()); }
-  function topLink() { var a = el('a', null, 'Back to top ↑'); a.href = '#'; a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); return a; }
+  function topLink() { var a = el('a', null, 'Back to top ↑'); a.href = '#top'; a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); return a; }
 
   function render() {
     footer.innerHTML = '';
