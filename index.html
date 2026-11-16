@@ -1626,6 +1626,7 @@
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('.email-choices'); if (!btn) return;
       var text = gather(), label = btn.textContent;
+      var gmailTab = window.open('', '_blank');   // open now, while the click still counts, so popup blockers allow it
       var copied = navigator.clipboard ? navigator.clipboard.writeText(text).then(function () { return true; }, function () { return false; }) : Promise.resolve(false);
       copied.then(function (ok) {
         var subject = encodeURIComponent("Ryan's website choices");
@@ -1635,8 +1636,9 @@
             ? 'My choices are on the clipboard - paste them here (Ctrl+V / Cmd+V).\n\n'
             : 'My choices were too long to fit; here is the start:\n\n' + text.slice(0, 1200));
         }
-        window.location.href = 'mailto:' + TO + '?subject=' + subject + '&body=' + body;
-        btn.textContent = ok ? 'Opening email… (also copied)' : 'Opening email…';
+        var gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(TO) + '&su=' + subject + '&body=' + body;
+        if (gmailTab) gmailTab.location.href = gmail; else window.location.href = gmail;
+        btn.textContent = ok ? 'Opening Gmail… (also copied)' : 'Opening Gmail…';
         setTimeout(function () { btn.textContent = label; }, 2500);
       });
     });
