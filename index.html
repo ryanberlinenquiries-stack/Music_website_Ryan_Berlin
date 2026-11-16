@@ -119,6 +119,7 @@
   .card { color: var(--color-text); }
   .albums .card-content .subtitle, .albums .card-footer-item { font-family: "Lora", Georgia, serif; font-variation-settings: normal; }
   .card-footer, .card-footer-item { border-color: var(--color-card-border); }
+  .card-footer-item.is-unreleased { opacity: .35; cursor: default; pointer-events: none; }
 
   /* ===== Sticky top bar with the four artist links ===== */
   .topbar {
@@ -593,10 +594,10 @@
     </button>
   </div>
   <nav class="artist-links" aria-label="Listen to Ryan Berlin">
-    <a href="#" class="link-spotify"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+    <a href="https://open.spotify.com/artist/4xtf4ZLDRmkbc3pbnIAwxF" target="_blank" rel="noopener" class="link-spotify"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
     <a href="#" class="link-applemusic"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
     <a href="#" class="link-youtube"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
-    <a href="#" class="link-bandcamp"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+    <a href="https://ryanberlin.bandcamp.com" target="_blank" rel="noopener" class="link-bandcamp"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
   </nav>
 </header>
 
@@ -719,10 +720,10 @@
             <p class="subtitle is-6">TBA | Dec 2026</p>
           </div>
           <footer class="card-footer">
-            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+            <a class="card-footer-item is-unreleased" aria-disabled="true" title="Not out yet"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
-            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+            <a class="card-footer-item is-unreleased" aria-disabled="true" title="Not out yet"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
           </footer>
         </div>
       </div>
@@ -734,10 +735,10 @@
             <p class="subtitle is-6">TBA | 2027</p>
           </div>
           <footer class="card-footer">
-            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+            <a class="card-footer-item is-unreleased" aria-disabled="true" title="Not out yet"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
-            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+            <a class="card-footer-item is-unreleased" aria-disabled="true" title="Not out yet"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
           </footer>
         </div>
       </div>
@@ -749,10 +750,10 @@
             <p class="subtitle is-6">2019</p>
           </div>
           <footer class="card-footer">
-            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
+            <a href="https://open.spotify.com/album/6hQvhM7JjBws641NU3oaSS" target="_blank" rel="noopener" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-spotify"></use></svg><span>Spotify</span></a>
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-applemusic"></use></svg><span>Apple Music</span></a>
             <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-youtube"></use></svg><span>YouTube</span></a>
-            <a href="#" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
+            <a href="https://ryanberlin.bandcamp.com/album/ep" target="_blank" rel="noopener" class="card-footer-item"><svg class="brand-icon" aria-hidden="true"><use href="#i-bandcamp"></use></svg><span>Bandcamp</span></a>
           </footer>
         </div>
       </div>
@@ -775,10 +776,10 @@
   "showSocial": true,
   "columns": [
     { "heading": "Listen", "links": [
-      { "label": "Spotify", "url": "#" },
+      { "label": "Spotify", "url": "https://open.spotify.com/artist/4xtf4ZLDRmkbc3pbnIAwxF" },
       { "label": "Apple Music", "url": "#" },
       { "label": "YouTube", "url": "#" },
-      { "label": "Bandcamp", "url": "#" }
+      { "label": "Bandcamp", "url": "https://ryanberlin.bandcamp.com" }
     ] },
     { "heading": "Contact", "links": [
       { "label": "Booking & enquiries", "url": "#" },
