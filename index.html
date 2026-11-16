@@ -53,6 +53,24 @@
   .title { color: var(--color-heading); }
   .content { color: var(--color-text); }
   .bio .content { font-size: 1.35rem; }
+  /* Background: lush forest photo rising from the bottom, neon haze glowing over it.
+     Photo: Simona D'Auria on Unsplash (Unsplash License), unsplash.com/photos/NI437pgc5VE */
+  body { background: transparent; }
+  body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  body::before {
+    background: url("https://images.unsplash.com/photo-1671485928166-2e99713f8752?auto=format&fit=crop&w=1920&q=70") center bottom / cover no-repeat;
+    filter: brightness(.75) saturate(1.25);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 22%, rgba(0,0,0,.4) 50%, transparent 82%);
+            mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.85) 22%, rgba(0,0,0,.4) 50%, transparent 82%);
+  }
+  body::after {
+    background:
+      radial-gradient(circle at 12% 15%, rgba(255, 40, 170, .32), transparent 42%),
+      radial-gradient(circle at 90% 8%, rgba(0, 230, 255, .26), transparent 40%),
+      radial-gradient(circle at 75% 75%, rgba(140, 60, 255, .22), transparent 48%);
+    mix-blend-mode: screen;
+  }
+  .albums .card { background: color-mix(in srgb, var(--color-card-bg) 80%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
   .subtitle { color: var(--color-text); }
   .card { color: var(--color-text); }
   .albums .card-content .subtitle, .albums .card-footer-item { font-family: "Lora", Georgia, serif; font-variation-settings: normal; }
