@@ -12,7 +12,7 @@
   /* ===== Design tokens: edit here, or use the 🎨 picker on the page ===== */
   :root {
     --color-bg: #000000;
-    --color-text: #cfcfcf;
+    --color-text: #eeeae4;
     --color-heading: #ffffff;
     --color-nav-bg: #000000;
     --color-nav-text: #ffffff;
@@ -103,6 +103,30 @@
   .sky-clouds .sky-sparkles circle:nth-child(3n)   { animation-duration: 5.5s; animation-delay: -2s; }
   .sky-clouds .sky-sparkles circle:nth-child(3n+1) { animation-duration: 3.2s; animation-delay: -1s; }
   @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .95; } }
+  /* Body text: brighter, with a slow shimmer that quickens (and throws sparkles) under the cursor */
+  .bio .content p { line-height: 1.7; letter-spacing: .005em; }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .bio .content p {
+      text-shadow: none; color: transparent;
+      background: linear-gradient(105deg, var(--color-text) 0 42%, #ffffff 46%, #ffe3f6 49%, #fff6d8 51%, #ffffff 54%, var(--color-text) 58% 100%);
+      background-size: 300% 100%; background-position: 100% 0;
+      -webkit-background-clip: text; background-clip: text;
+      filter: drop-shadow(0 1px 6px rgba(0, 0, 0, .75));
+      animation: text-shimmer 9s ease-in-out infinite;
+      transition: filter .4s ease; }
+    .bio .content p:nth-child(2) { animation-delay: .6s; }
+    .bio .content p:nth-child(3) { animation-delay: 1.2s; }
+    .bio .content p:nth-child(4) { animation-delay: 1.8s; }
+    .bio .content p:hover { animation: text-shimmer-fast 1.6s linear infinite;
+      filter: drop-shadow(0 1px 6px rgba(0, 0, 0, .75)) drop-shadow(0 0 10px rgba(255, 220, 245, .35)); }
+  }
+  @keyframes text-shimmer { 0%, 70% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+  @keyframes text-shimmer-fast { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+  .text-sparkle { position: fixed; z-index: 50; pointer-events: none; font-size: 12px; line-height: 1; transform: translate(-50%, -50%);
+    text-shadow: 0 0 6px currentColor; animation: text-sparkle .9s ease-out forwards; }
+  @keyframes text-sparkle { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.3) rotate(0); }
+    25% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -160%) scale(1) rotate(90deg); } }
+  @media (prefers-reduced-motion: reduce) { .bio .content p, .bio .content p:hover { animation: none !important; } .text-sparkle { display: none; } }
   /* Booking & enquiries form (sent to Ryan's inbox via FormSubmit) */
   .enquire-dialog { width: min(92vw, 560px); max-height: 90vh; padding: 0; border: 1px solid var(--color-card-border);
     border-radius: 10px; background: var(--color-card-bg); color: var(--color-text); }
@@ -1930,6 +1954,25 @@
       .catch(function () { status.textContent = 'Couldn’t send — please try again, or email ryanberlinenquiries@gmail.com.'; })
       .finally(function () { send.disabled = false; });
   });
+})();
+</script>
+<script>
+// Little sparkles that drift up from the cursor while it moves over the bio text
+(function () {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var last = 0, colors = ['#ffffff', '#ffe3f6', '#fff1c2', '#dfe6ff'];
+  document.addEventListener('mousemove', function (e) {
+    if (!e.target.closest || !e.target.closest('.bio .content p')) return;
+    var now = performance.now(); if (now - last < 55) return; last = now;
+    var s = document.createElement('span');
+    s.className = 'text-sparkle'; s.textContent = Math.random() < .7 ? '✦' : '✧';
+    s.style.left = (e.clientX + (Math.random() - .5) * 26) + 'px';
+    s.style.top = (e.clientY + (Math.random() - .5) * 18) + 'px';
+    s.style.color = colors[(Math.random() * colors.length) | 0];
+    s.style.fontSize = (8 + Math.random() * 8) + 'px';
+    document.body.appendChild(s);
+    setTimeout(function () { s.remove(); }, 950);
+  }, { passive: true });
 })();
 </script>
 </body>
